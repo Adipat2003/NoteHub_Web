@@ -10,7 +10,7 @@ export const CREATE_NOTES:React.FC = () => {
 
   const [title, setTitle] = useState('')
   const [course, setCourse] = useState('')
-  const [view, setView] = useState('')
+  const [view, setView] = useState('public')
   const [university, setUniversity] = useState('')
   const [file, setFile] = useState('')
   const [fileData, setFileData] = useState<string | null>(null)
@@ -70,7 +70,6 @@ export const CREATE_NOTES:React.FC = () => {
           root: {
             fontFamily: ['Rubik', 'sans-serif'].join(','),
             fontSize: 16,
-            marginLeft: 20,
           }
         }
       },
@@ -93,19 +92,22 @@ export const CREATE_NOTES:React.FC = () => {
 
   return (
     <ThemeProvider theme={theme}>
-      <Container style={{ height: "100%", width: "100%", display: "flex", padding: 0, justifyContent: "center" }}>
+      <Container style={{ height: "100%", width: "100%", display: "flex", padding: "0 0 0 0", justifyContent: "center", margin: "0 0 0 0" }}>
         <Box
           height="calc(100% - 10vh)"
           sx={{
             width: 300,
             backgroundColor: 'transparent',
-            paddingTop: '10vh',
-            borderRight: '0.1px solid black'
+            paddingTop: '2vh',
+            display: 'flex',
+            justifyContent: 'center',
+            flexDirection: 'column',
+            marginLeft: '50px'
           }}
         >
           <h1 style={{
             fontSize: "70px",
-            width: '83%',
+            width: '100%',
             textAlign: 'center',
             marginBottom: '20px',
           }}>Add Note</h1>
@@ -114,6 +116,9 @@ export const CREATE_NOTES:React.FC = () => {
             label="Title" 
             size="small" 
             required  
+            sx={{
+              width: '100%',
+            }}
             inputProps={{ style: { fontSize: '16px' } }}
             onChange={(e) => { setTitle(e.target.value) }}
           />
@@ -123,7 +128,8 @@ export const CREATE_NOTES:React.FC = () => {
             size="small" 
             required 
             sx={{
-              marginTop: '20px'
+              marginTop: '20px',
+              width: '100%',
             }}          
             inputProps={{ style: { fontSize: '16px' } }}
             onChange={(e) => { setUniversity(e.target.value) }}
@@ -134,13 +140,14 @@ export const CREATE_NOTES:React.FC = () => {
             size="small" 
             required 
             sx={{
-              marginTop: '20px'
+              marginTop: '20px',
+              width: '100%',
             }}            
             inputProps={{ style: { fontSize: '16px' } }}
             onChange={(e) => { setCourse(e.target.value) }}
           />
 
-          <FormControl sx={{ minWidth: 10, marginLeft: 2.5, width: 212.5, marginTop: "20px", marginBottom: "10px" }} size="small">
+          <FormControl sx={{ minWidth: 10, width: 212.5, marginTop: "20px", marginBottom: "10px" }} size="small">
             <InputLabel id="demo-select-small-label">View</InputLabel>
             <Select
               labelId="demo-select-small-label"
@@ -152,12 +159,10 @@ export const CREATE_NOTES:React.FC = () => {
                 typography: {
                   fontSize: 16
                 },
+                width: '100%',
               }}
               onChange={(e) => { setView(e.target.value) }}
             >
-              <MenuItem value="">
-                None
-              </MenuItem>
               <MenuItem value={'public'}>Public</MenuItem>
               <MenuItem value={'private'}>Private</MenuItem>
             </Select>
@@ -168,10 +173,10 @@ export const CREATE_NOTES:React.FC = () => {
             component="label"
             sx={{
               marginTop: 1,
-              marginLeft: 7
+              width: '100%',
             }}
           >
-            Upload File
+            Upload .PDF File
             <input
               type="file"
               hidden
@@ -183,7 +188,7 @@ export const CREATE_NOTES:React.FC = () => {
             variant="contained" 
             sx={{             
               marginTop: 2,
-              marginLeft: 8.75
+              width: '100%',
             }}
             size='small'
             endIcon={<Send />}
@@ -195,6 +200,7 @@ export const CREATE_NOTES:React.FC = () => {
         <embed src={file} type="application/pdf" style={{ 
           height: "100%",
           width: "55vw",
+          marginLeft: '50px'
         }}/>
       </Container>
     </ThemeProvider>
