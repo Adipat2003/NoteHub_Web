@@ -1,0 +1,109 @@
+.Home {
+    width: 100vw;
+    height: 100vh;
+}
+
+.Body {
+    width: 100vw;
+    height: calc(100vh - 80px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.Text {
+    width: 40%;
+    height: 85%;
+}
+
+.SVG {
+    width: 50%;
+    height: 85%;
+    background: url('../../../public/8635954.jpg') center;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-color: #c5caf2;
+    border-radius: 20px;
+}
+
+.SVG a {
+    height: 100%;
+    width: 100%;
+}
+
+.Text h1 {
+    font-size: 110px;
+    text-align: left;
+    width: 100%;
+    line-height: 110px;
+    margin-left: 10px;
+    margin-top: 100px;
+}
+
+.Text h2 {
+    width: 100%;
+    font-size: 20px;
+    font-weight: 100;
+    margin-left: 10px;
+    margin-top: 10px;
+}
+
+.Navbar {
+    width: 100vw;
+    height: 80px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.Logo, .Launch, .Title {
+    height: 100%;
+    width: 300px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.Title {
+    font-size: 25px;
+}
+
+.PNG {
+    width: 50px;
+    height: 50px;
+    border-radius: 10px;
+    background-image: url('../../../public/Logo.png');
+    background-size: 25px 25px;
+}
+
+.Title h1 {
+    font-size: 15px;
+    font-weight: 400;
+}
+
+.Start a,
+.Launch a {
+    text-decoration: none;
+    color: black;
+    border: 1px solid black;
+    border-radius: 20px;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 7.5px;
+    padding-bottom: 7.5px;
+    box-shadow: 0 0 0 black;
+    transition: 1s;
+}
+
+.Start a:hover,
+.Launch a:hover {
+    box-shadow: 4px 4px 0 black;
+}
+
+.Start {
+    width: 300px;
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    margin-left: 10px;
+    margin-top: 20px;
+}

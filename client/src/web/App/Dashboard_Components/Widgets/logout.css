@@ -1,0 +1,29 @@
+.Dropdown {
+    border: 0.1px solid black;
+    width: 150px;
+    position: absolute;
+    top: 70px;
+    right: 0;
+    background-color: white;
+    border-bottom-left-radius: 20px;
+    overflow: hidden;
+}
+
+.Dropdown button {
+    display: block;
+    margin: 0 auto;
+    width: 100%;
+    background-color: white;
+    border: none;
+    cursor: pointer;
+    font-family: 'Rubik', sans-serif;
+    font-size: 15px;
+    font-weight: 400;
+    height: 25px;
+}
+
+.Dropdown button:hover {
+    color: white;
+    background-color: black;
+}
+

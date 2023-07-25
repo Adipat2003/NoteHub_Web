@@ -1,0 +1,95 @@
+import { comments } from "./test_comment"
+
+export const feed_data = [
+    {
+        Note_ID: '1',
+        Profile: 'profile',
+        Created: 'Professors 1',
+        Title: 'Machine Learning',
+        Course: 'CS 229',
+        University: 'Stanford',
+        Views: 10,
+        Likes: 56,
+        Dislikes: 20,
+        Date: '2014-10-10',
+        Comment: comments
+    },
+    {
+        Note_ID: '2',
+        Profile: 'profile',
+        Created: 'Professors 1',
+        Title: 'Machine Learning',
+        Course: 'CS 446',
+        University: 'UIUC',
+        Views: 230,
+        Likes: 56,
+        Dislikes: 20,
+        Date: '2014-10-10',
+        Comment: comments
+    },
+    {
+        Note_ID: '3',
+        Profile: 'profile',
+        Created: 'Professors X',
+        Title: `Andy's Machine Learning`,
+        Course: 'CS 229',
+        University: 'Stanford',
+        Views: 120,
+        Likes: 50,
+        Dislikes: 10,
+        Date: '2011-10-10',
+        Comment: []
+    },
+    {
+        Note_ID: '4',
+        Profile: 'profile',
+        Created: 'Professors X',
+        Title: `Andy's Machine Learning`,
+        Course: 'CS 229',
+        University: 'Stanford',
+        Views: 250,
+        Likes: 50,
+        Dislikes: 20,
+        Date: '2011-10-10',
+        Comment: []
+    },
+    {
+        Note_ID: '5',
+        Profile: 'profile',
+        Created: 'Professors X',
+        Title: `Andy's Machine Learning`,
+        Course: 'CS 229',
+        University: 'Stanford',
+        Views: 250,
+        Likes: 60,
+        Dislikes: 20,
+        Date: '2012-10-10',
+        Comment: []
+    },
+    {
+        Note_ID: '6',
+        Profile: 'profile',
+        Created: 'Professors X',
+        Title: `Andy's Machine Learning`,
+        Course: 'CS 446',
+        University: 'Stanford',
+        Views: 350,
+        Likes: 50,
+        Dislikes: 40,
+        Date: '2012-10-10',
+        Comment: []
+    },
+    {
+        Note_ID: '7',
+        Profile: 'profile',
+        Created: 'Professors X asdoijasoifjdsoifajdsiofjasoidfjasidof',
+        Title: `Andy's Machine Learning`,
+        Course: 'CS 229',
+        University: 'Stanford',
+        Views: 700,
+        Likes: 50,
+        Dislikes: 30,
+        Date: '2012-10-10',
+        Comment: []
+    },
+]

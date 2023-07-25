@@ -1,0 +1,213 @@
+.Dashboard {
+    height: 100vh;
+    width: 100vw;
+    position: relative;
+    background-color: white;
+    z-index: 0;
+    color: black;
+}
+
+.Dashboard_Logo {
+    position: fixed;
+    background-color: white;
+    top: 0;
+    left: 0;
+    width: 275px;
+    height: 100px;
+    z-index: 3;
+    border-bottom: 0.1px solid black;
+    border-right: 0.1px solid black;
+    border-bottom-right-radius: 35px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.Dashboard_Logo h1 {
+    text-align: center;
+    font-size: 30px;
+    margin-left: 15px;
+}
+
+.Dashboard_Logo_Image {
+    width: 50px;
+    height: 50px;
+    border-radius: 10px;
+    background-image: url('../../../public/Logo.png');
+    background-size: 25px 25px;
+    margin-right: 15px;
+}
+
+.Dashboard_Navbar {
+    height: 70px;
+    width: 100vw;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: white;
+    border-bottom: 0.1px solid black;
+    z-index: 2;
+    display: flex;
+    justify-content: right;
+    align-items: center;
+}
+
+.Dashboard_Searchbar {
+    border: 0.1px solid black;
+    height: 40px;
+    width: 27.5vw;
+    border-radius: 20px;
+    display: flex;
+    justify-content: right;
+}
+
+.Dashboard_Searchbar input {
+    width: 85%;
+    padding-bottom: 10px;
+    padding-top: 10px;
+    padding-left: 20px;
+    height: 20px;
+    border: none;
+    border-radius: 20px;
+    font-size: 15px;
+    font-family: 'Rubik', sans-serif;
+    font-weight: 400;
+}
+
+.Dashboard_Searchbar input:focus {
+    outline: none;
+}
+
+.Dashboard_Searchbar button {
+    width: 40px;
+    height: 40px;
+    background-color: transparent;
+    border-radius: 20px;
+    border: none;
+    cursor: pointer;
+}
+
+.Search_Arrow {
+    transform: translate(0, 3px);
+}
+
+.Navbar_Icons {
+    margin-left: 20px;
+}
+
+.Navbar_Buttons {
+    height: 100%;
+    width: calc((100vw - 27.5vw) / 2);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.Welcome {
+    display: flex;
+    align-items: center;
+}
+
+.Welcome h1 {
+    font-family: 'Rubik', sans-serif;
+    font-weight: 400;
+    font-size: 15px;
+}
+
+.Profile_Image {
+    border: 0.1px solid black;
+    border-radius: 40px;
+    width: 50px;
+    height: 50px;
+    margin-right: 50px;
+    margin-left: 20px;
+    background-color: transparent;
+    cursor: pointer;
+}
+
+.Add_Note {
+    background-color: transparent;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    margin-left: 10px;
+    width: 40px;
+    height: 40px;
+    transition: 0.5s;
+}
+
+.Add_Note:hover {
+    background-color: black;
+    color: white;
+}
+
+.Dashboard_Sidebar {
+    position: fixed;
+    background-color: white;
+    border-right: 0.1px solid black;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 245px;
+    z-index: 1;
+}
+
+.Sidebar_Header {
+    width: 100%;
+    height: 30px;
+    margin-top: 150px;
+}
+
+.Sidebar_Header p {
+    color: black;
+    font-family: 'Rubik', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    margin-left: 55px;
+    margin-top: 5px;
+}
+
+.Sidebar_Options {
+    width: 100%;
+    min-height: fit-content;
+    height: auto;
+}
+
+.Sidebar_Options button {
+    border: 0.1px solid white;
+    color: black;
+    font-family: 'Rubik', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    background-color: transparent;
+    display: block;
+    width: 90%;
+    text-align: left;
+    padding-left: 20px;
+    padding-top: 10px;
+    padding-bottom: 15px;
+    cursor: pointer;
+    margin: 0 auto;
+    border-radius: 10px;
+    transition: 0.25s;
+}
+
+.Sidebar_Options button:hover {
+    border-bottom: 0.1px solid black;
+    border-top: 0.1px solid black;
+}
+
+.Sidebar_Icon {
+    transform: translateY(4.5px);
+    margin-right: 10px;
+    margin-left: 20px;
+}
+
+.Dashboard_Main_Content {
+    position: absolute;
+    background-color: white;
+    top: 70px;
+    left: 245px;
+    height: calc(100vh - 70px);
+    width: calc(100vw - 245px);
+}
