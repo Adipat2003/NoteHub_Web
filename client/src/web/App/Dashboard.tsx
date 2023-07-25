@@ -1,12 +1,12 @@
 import React from 'react'
 import './dashboard.css'
-import { PiFinnTheHumanLight, PiChatTeardropTextLight, PiBookmarkSimpleThin, PiHexagonLight } from 'react-icons/pi'
+import { PiFinnTheHumanLight, PiChatTeardropTextLight, PiHexagonLight } from 'react-icons/pi'
 import { BsArrowReturnRight, BsBookmarkDash } from 'react-icons/bs'
 import { CiBellOn } from 'react-icons/ci'
 import { BsPlusLg } from 'react-icons/bs'
 import { Feed } from './Dashboard_Components/Feed/Feed'
 import { displayProps } from './Interface'
-import { useState, useContext, useEffect, useRef } from 'react'
+import { useState, useContext, useEffect } from 'react'
 import { UserContext, UserContextType } from '../../App'
 import { Logout } from './Dashboard_Components/Widgets/Logout'
 import { LiaStickyNoteSolid } from 'react-icons/lia'
@@ -28,7 +28,7 @@ export const Dashboard:React.FC = () => {
     if (currentUserData.Username === '') {
       navigate('/login')
     }
-  }, [])
+  }, [currentUserData.Username, navigate])
 
   return(
     <div className='Dashboard'>
