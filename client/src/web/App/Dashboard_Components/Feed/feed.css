@@ -2,8 +2,6 @@
     width: 100%;
     min-height: fit-content;
     height: auto;
-    display: flex;
-    justify-content: center;
 }
 
 .Feed {
@@ -14,6 +12,9 @@
     height: auto;
     border: 0.1px solid black;
     margin-top: 20px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .Feed_Footer {

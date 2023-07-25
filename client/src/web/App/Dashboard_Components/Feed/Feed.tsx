@@ -176,7 +176,7 @@ export const Feed:React.FC = () => {
                     <div className='Feed_Footer'>
                         <p>{ page !== filteredData.length - 1 ? `${6*page + 1} - ${6*page + 6}` : `${6*page + 1} - ${filteredData2.length}`} of {filteredData2.length}</p>
                         <button onClick={() => { page !== 0 ? setPage(page - 1) : setPage(0) }}><MdArrowBackIos style={{ transform: 'translateY(1px)' }}/></button>
-                        <button onClick={() => { page !== 0 ? setPage(page + 1) : setPage(filteredData.length - 1) }}><MdArrowForwardIos style={{ transform: 'translateY(1px)' }}/></button>
+                        <button onClick={() => { page !== filteredData.length - 1 ? setPage(page + 1) : setPage(filteredData.length - 1) }}><MdArrowForwardIos style={{ transform: 'translateY(1px)' }}/></button>
                     </div>
                 </div>
             </div>
