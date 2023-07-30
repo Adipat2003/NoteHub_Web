@@ -81,7 +81,6 @@ export const Feed:React.FC = () => {
 
     useEffect(() => {
         // perform fetch request to get notes data
-
         const getNotes = async () => {
             const data = await getDocs(notesCollectionRef)
             const ALL_NOTES = data.docs.map((doc) => ({ ...doc.data() }))
@@ -95,7 +94,7 @@ export const Feed:React.FC = () => {
                   Created: val?.Creator,
                   Title: val?.Title,
                   Course: val?.Course,
-                  University: university,
+                  University: val?.University,
                   Views: val?.Views,
                   Likes: val?.Likes,
                   Dislikes: val?.Dislikes,
@@ -107,20 +106,10 @@ export const Feed:React.FC = () => {
 
             setData(feedTemp)
             setFilteredData2(feedTemp)
-
-            const tableData:FeedProps[][] = splitIntoEqualArrays(feedTemp, 6)
-            console.log(feedTemp)
-            console.log(tableData)
-            setFilteredData(tableData)
+            setFilteredData(splitIntoEqualArrays(feedTemp, 6))
 
         }
-        /*
-            filteredData[page].map((val) => {
-                return (
-                    <Feed_Card key={val.Note_ID} {...val} displayCard={(val: string) => setId(val)}/>
-                )
-            })
-        */
+
         getNotes()
     }, [])
 

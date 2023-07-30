@@ -34,11 +34,11 @@ export const CREATE_NOTES:React.FC = () => {
   const notesCollectionRef = collection(db, "notes")
 
   const handleSubmit = () => {
+    alert("Note Submitted")
     if (file == null) {
       return
     } else {
       uploadPDFAndGetURL(file).then((url) => {
-        alert("Note Submitted")
         const now = new Date()
         const year = now.getFullYear()
         const month = String(now.getMonth() + 1).padStart(2, '0')
