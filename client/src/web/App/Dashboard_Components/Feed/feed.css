@@ -190,6 +190,13 @@
     width: 100%;
     border-bottom: 0.1px solid black;
     transform: translateX(-7.5px);
+    display: flex;
+    justify-content: center;
+}
+
+.Viewer embed {
+    height: 100%;
+    width: 80%;
 }
 
 .About {

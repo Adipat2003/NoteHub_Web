@@ -3,10 +3,11 @@ import { useState, useContext } from 'react'
 import { UserContext, UserContextType } from '../../../../App'
 import './create_notes.css'
 import { storage } from '../../../Firebase/Firebase'
-import { database } from '../../../Firebase/Firebase'
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage'
 import { v4 } from 'uuid'
 import { CommentProps } from '../Feed/Feed_Interface'
+import { addDoc, collection } from 'firebase/firestore'
+import { db } from '../../../Firebase/Firebase'
 
 async function uploadPDFAndGetURL(file: File): Promise<string> {
   const fileRef = ref(storage, `notes/${file.name + v4()}`)
@@ -29,6 +30,8 @@ export const CREATE_NOTES:React.FC = () => {
   const [university, setUniversity] = useState('')
   const [filename, setFileName] = useState('')
   const [file, setFile] = useState<File | null>(null)
+
+  const notesCollectionRef = collection(db, "notes")
 
   const handleSubmit = () => {
     if (file == null) {
@@ -60,6 +63,11 @@ export const CREATE_NOTES:React.FC = () => {
           Comments: comments
         }
 
+        const createNote = async () => {
+          await addDoc(notesCollectionRef, data)
+        }
+
+        createNote()
         // Now we need to upload this data 
 
       }).catch((err) => {

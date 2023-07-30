@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react'
-import { feed_data } from './test_feed'
 import { FeedProps } from './Feed_Interface'
 import { Feed_Card } from './Feed_Card'
 import { Note } from './Note'
 import { MdArrowForwardIos, MdArrowBackIos } from 'react-icons/md'
+import { db } from '../../../Firebase/Firebase'
+import { collection, getDocs } from 'firebase/firestore'
 import './feed.css'
 
 export const Feed:React.FC = () => {
@@ -23,6 +24,8 @@ export const Feed:React.FC = () => {
     const [university, setUniversity] = useState('')
     const [search, setSearch] = useState('')
 
+    const [notes, setNotes] = useState([])
+    const notesCollectionRef = collection(db, "notes")
 
     useEffect(() => {
 
@@ -79,13 +82,51 @@ export const Feed:React.FC = () => {
     useEffect(() => {
         // perform fetch request to get notes data
 
-        
-        setData(feed_data)
-        setFilteredData2(feed_data)
-        setFilteredData(splitIntoEqualArrays(feed_data, 6))
+        const getNotes = async () => {
+            const data = await getDocs(notesCollectionRef)
+            const ALL_NOTES = data.docs.map((doc) => ({ ...doc.data() }))
+
+            const feedTemp:FeedProps[] = [] 
+
+            ALL_NOTES?.map((val) => { // <-- Added optional chaining here
+                const data = {
+                  Note_ID: val?.Note_URL,
+                  Profile: val?.Profile_URL,
+                  Created: val?.Creator,
+                  Title: val?.Title,
+                  Course: val?.Course,
+                  University: university,
+                  Views: val?.Views,
+                  Likes: val?.Likes,
+                  Dislikes: val?.Dislikes,
+                  Date: val?.Date,
+                  Comment: val?.Comments,
+                }
+                feedTemp.push(data)
+            })
+
+            setData(feedTemp)
+            setFilteredData2(feedTemp)
+
+            const tableData:FeedProps[][] = splitIntoEqualArrays(feedTemp, 6)
+            console.log(feedTemp)
+            console.log(tableData)
+            setFilteredData(tableData)
+
+        }
+        /*
+            filteredData[page].map((val) => {
+                return (
+                    <Feed_Card key={val.Note_ID} {...val} displayCard={(val: string) => setId(val)}/>
+                )
+            })
+        */
+        getNotes()
     }, [])
 
     const splitIntoEqualArrays = (arr: FeedProps[], size: number) => {
+
+
         const result = [];
         const totalSubArrays = Math.ceil(arr.length / size);
       
@@ -168,11 +209,11 @@ export const Feed:React.FC = () => {
                     </div>
                     <div className='Feed_Data'>
                         {
-                            filteredData[page].map((val) => {
+                            filteredData[page] !== undefined ? filteredData[page].map((val) => {
                                 return (
                                     <Feed_Card key={val.Note_ID} {...val} displayCard={(val: string) => setId(val)}/>
                                 )
-                            })
+                            }) : (<></>)                        
                         }
                     </div>
                     <div className='Feed_Footer'>

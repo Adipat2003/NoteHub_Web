@@ -25,11 +25,6 @@ export const Note:React.FC<FeedCardProps> = ({
 
     const [comment, setComment] = useState('')
 
-    useEffect(() => {
-        // fetch thread data
-        
-    }, [])
-
     const SubmitComment = (e: FormEvent) => {
         e.preventDefault()
     }
@@ -50,7 +45,7 @@ export const Note:React.FC<FeedCardProps> = ({
         <>
             <button className='Exit_Note' onClick={() => { displayCard('') }}><BsArrowLeftCircle className='Exit_Note_Button'/></button>
             <div className="Viewer">
-
+                <embed src={Note_ID} />
             </div>
             <div className="About">
 
