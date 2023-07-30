@@ -78,6 +78,8 @@ export const Feed:React.FC = () => {
 
     useEffect(() => {
         // perform fetch request to get notes data
+
+        
         setData(feed_data)
         setFilteredData2(feed_data)
         setFilteredData(splitIntoEqualArrays(feed_data, 6))

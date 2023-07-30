@@ -1,0 +1,14 @@
+Note Format:
+{
+    Note_URL: string,
+    Profile_URL: string,
+    Creator: string,
+    Title: string,
+    Course: string,
+    University: string,
+    Views: number,
+    Likes: number,
+    Dislikes: number,
+    Date: string,
+    Comment: comments[]
+},

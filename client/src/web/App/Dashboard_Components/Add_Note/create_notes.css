@@ -43,6 +43,18 @@
     font-size: 15px;
 }
 
+.Create_Note_Form select {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 10px;
+    border-radius: 20px;
+    width: 140px;
+    padding: 1px 20px 1px 20px;
+    border: 0.1px solid black;
+    text-align: center;
+}
+
 .Create_Note_Form label,
 .Create_Note_Form button,
 .Create_Note_Form button  {
@@ -70,8 +82,7 @@
 }
 
 .Create_Note_Form label:hover,
-.Create_Note_Form button:hover,
-.Create_Note_Form button:hover {
+.Create_Note_Form button:hover{
     box-shadow: 5px 5px 0 black;
 }
 
