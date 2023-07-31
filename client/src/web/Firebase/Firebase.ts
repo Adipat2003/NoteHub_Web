@@ -45,10 +45,12 @@ export async function uploadPDFAndGetURL(file: File, fileName: string): Promise<
 }
 
 export async function cleanStorage(fileName: string) {
+    console.log(fileName)
     const fileRef = ref(storage, fileName)
     deleteObject(fileRef).then((res) => {
         console.log("Deleted File")
     }).catch((err) => {
         console.log("Error Occured")
+        console.log(err)
     })
 }

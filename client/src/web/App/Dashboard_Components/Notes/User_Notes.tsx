@@ -43,7 +43,8 @@ export const USER_NOTES:React.FC = () => {
           Course: updatedCourse !== '' ? updatedCourse : document_params.Course,
           Title: updatedTitle !== '' ? updatedTitle : document_params.Title,  
           University: updatedUniversity !== '' ? updatedUniversity : document_params.University,
-          Note_URL: new_url
+          Note_URL: new_url,
+          Note_FileName: fileName
         }
         await cleanStorage(document_params.Note_FileName)
         await updateDoc(note_doc, updated_data)
@@ -63,10 +64,10 @@ export const USER_NOTES:React.FC = () => {
     alert("Note Deleted")
     if (USER_NOTES.current !== null && selected !== null) {
       const document = USER_NOTES.current.filter((val: { params: { [x: string]: any }, id: string }) => val.params.Note_URL === selected.Note_ID)
-      const document_params = document[0].params
+      const fileName = document[0].params.Note_FileName
       const document_id = document[0].id
       const note_doc = doc(db, "notes", document_id)
-      await cleanStorage(document_params.Note_FileName)
+      await cleanStorage(fileName)
       await deleteDoc(note_doc)
     }
   }
