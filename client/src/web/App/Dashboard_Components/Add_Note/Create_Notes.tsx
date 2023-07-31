@@ -1,18 +1,19 @@
 import React from 'react'
 import { useState, useContext } from 'react'
 import { UserContext, UserContextType } from '../../../../App'
-import './create_notes.css'
 import { storage } from '../../../Firebase/Firebase'
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage'
 import { v4 } from 'uuid'
 import { CommentProps } from '../Feed/Feed_Interface'
 import { addDoc, collection } from 'firebase/firestore'
 import { db } from '../../../Firebase/Firebase'
+import './create_notes.css'
+
 
 async function uploadPDFAndGetURL(file: File): Promise<string> {
   const fileRef = ref(storage, `notes/${file.name + v4()}`)
   try {
-    const snapshot = await uploadBytes(fileRef, file) // Upload the PDF to Firebase Storage
+    const snapshot = await uploadBytes(fileRef, file) // Upload the PDF to Firebase Cloud Storage
     const downloadURL = await getDownloadURL(snapshot.ref) // Get the download URL of the uploaded PDF
     return downloadURL as string
   } catch (error) {
@@ -57,6 +58,7 @@ export const CREATE_NOTES:React.FC = () => {
           Title: title,
           Course: course,
           University: university,
+          Access: view,
           Views: 0,
           Likes: 0,
           Dislikes: 0,
@@ -65,7 +67,7 @@ export const CREATE_NOTES:React.FC = () => {
         }
 
         const createNote = async () => {
-          await addDoc(notesCollectionRef, data)
+          await addDoc(notesCollectionRef, data) // this will also upload the data to Firestore Database (NOT CLOUD STORAGE)
         }
 
         createNote()

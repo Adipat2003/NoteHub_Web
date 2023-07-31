@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react'
+import { MdArrowForwardIos, MdArrowBackIos } from 'react-icons/md'
+import { collection, getDocs } from 'firebase/firestore'
+import { db } from '../../../Firebase/Firebase'
 import { FeedProps } from './Feed_Interface'
 import { Feed_Card } from './Feed_Card'
 import { Note } from './Note'
-import { MdArrowForwardIos, MdArrowBackIos } from 'react-icons/md'
-import { db } from '../../../Firebase/Firebase'
-import { collection, getDocs } from 'firebase/firestore'
 import './feed.css'
 
 export const Feed:React.FC = () => {
@@ -24,7 +24,6 @@ export const Feed:React.FC = () => {
     const [university, setUniversity] = useState('')
     const [search, setSearch] = useState('')
 
-    const [notes, setNotes] = useState([])
     const notesCollectionRef = collection(db, "notes")
 
     useEffect(() => {
@@ -64,8 +63,6 @@ export const Feed:React.FC = () => {
         temp_data = temp_data.filter(value => temp3.includes(value))
         temp_data = removeDuplicates(temp_data)
 
-        console.log(temp_data)
-
         if (temp_data.length !== 0) {
             setFilteredData2(temp_data)
             setFilteredData(splitIntoEqualArrays(temp_data,6))
@@ -88,21 +85,26 @@ export const Feed:React.FC = () => {
             const feedTemp:FeedProps[] = [] 
 
             ALL_NOTES?.map((val) => { // <-- Added optional chaining here
-                const data = {
-                  Note_ID: val?.Note_URL,
-                  Profile: val?.Profile_URL,
-                  Created: val?.Creator,
-                  Title: val?.Title,
-                  Course: val?.Course,
-                  University: val?.University,
-                  Views: val?.Views,
-                  Likes: val?.Likes,
-                  Dislikes: val?.Dislikes,
-                  Date: val?.Date,
-                  Comment: val?.Comments,
+                if (val?.Access === 'Public') {
+                    const data = {
+                        Note_ID: val?.Note_URL,
+                        Profile: val?.Profile_URL,
+                        Created: val?.Creator,
+                        Title: val?.Title,
+                        Course: val?.Course,
+                        University: val?.University,
+                        Views: val?.Views,
+                        Likes: val?.Likes,
+                        Dislikes: val?.Dislikes,
+                        Date: val?.Date,
+                        Comment: val?.Comments,
+                        Access: val?.Access
+                    }
+                    feedTemp.push(data)
                 }
-                feedTemp.push(data)
             })
+
+            console.log(ALL_NOTES)
 
             setData(feedTemp)
             setFilteredData2(feedTemp)
@@ -114,15 +116,12 @@ export const Feed:React.FC = () => {
     }, [])
 
     const splitIntoEqualArrays = (arr: FeedProps[], size: number) => {
-
-
         const result = [];
         const totalSubArrays = Math.ceil(arr.length / size);
       
         for (let i = 0; i < totalSubArrays; i++) {
           result.push(arr.slice(i * size, (i + 1) * size));
         }
-      
         return result;
     }
 

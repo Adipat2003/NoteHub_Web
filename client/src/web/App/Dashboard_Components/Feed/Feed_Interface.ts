@@ -3,6 +3,7 @@ export interface FeedProps {
     Profile: string,
     Created: string,
     Title: string,
+    Access: string,
     Course: string,
     University: string,
     Views: number,
