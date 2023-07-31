@@ -10,7 +10,7 @@ import { db } from '../../../Firebase/Firebase'
 import './create_notes.css'
 
 
-async function uploadPDFAndGetURL(file: File): Promise<string> {
+export async function uploadPDFAndGetURL(file: File): Promise<string> {
   const fileRef = ref(storage, `notes/${file.name + v4()}`)
   try {
     const snapshot = await uploadBytes(fileRef, file) // Upload the PDF to Firebase Cloud Storage
@@ -114,7 +114,6 @@ export const CREATE_NOTES:React.FC = () => {
         <input type='file' onChange={ handleFile } id='uploadPdf'/>
         <select value={view} onChange={(e) => { 
           setView(e.target.value) 
-          console.log(e.target.value)
         }}>
           <option value="Public">Public</option>
           <option value="Private">Private</option>

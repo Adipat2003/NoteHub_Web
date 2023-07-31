@@ -1,46 +1,94 @@
-import React, { useEffect, useState, useContext } from 'react'
+import React, { useEffect, useState, useContext, useRef } from 'react'
 import { UserContext, UserContextType } from '../../../../App'
 import { FeedProps } from '../Feed/Feed_Interface'
 import { db } from '../../../Firebase/Firebase'
-import { collection, getDocs } from 'firebase/firestore'
+import { collection, doc,  getDocs, deleteDoc, updateDoc } from 'firebase/firestore'
+import { uploadPDFAndGetURL } from '../Add_Note/Create_Notes'
 import './user_notes.css'
+import { update } from '@firebase/database'
 
 export const USER_NOTES:React.FC = () => {
 
   const { currentUserData } = useContext<UserContextType>(UserContext)
   const [data, setData] = useState<FeedProps[]>([])
-  const notesCollectionRef = collection(db, "notes")
   const [selected, setSelected] = useState<FeedProps | null>(null)
+
   const [updatedTitle, setUpdatedTitle] = useState('')
   const [updatedCourse, setUpdatedCourse] = useState('')
   const [updatedUniversity, setUpdatedUniversity] = useState('')
+  const [updatedFiles, setUpdatedFiles] = useState<File | null>(null)
   const [updatedNoteID, setUpdatedNoteID] = useState('')
   const [updatedAccess, setUpdatedAccess] = useState('')
+
+  const notesCollectionRef = collection(db, "notes")
+
+  const USER_NOTES = useRef<{ params: { [x: string]: any }, id: string }[] | null>(null)
 
 
   let count = -1;
 
+  const updateNote = async () => {
+    alert("Note Updated")
+    if (USER_NOTES.current !== null && selected !== null) {
+      const document = USER_NOTES.current.filter((val: { params: { [x: string]: any }, id: string }) => val.params.Note_URL === selected.Note_ID)
+      const document_params = document[0].params
+      const document_id = document[0].id
+      const note_doc = doc(db, "notes", document_id)
+      let new_url = ''
+
+      if (updatedFiles !== null) {
+        await uploadPDFAndGetURL(updatedFiles).then((url) => { new_url = url })
+        const updated_data = {
+          Access: updatedAccess !== '' ? updatedAccess : document_params.Access,
+          Course: updatedCourse !== '' ? updatedCourse : document_params.Course,
+          Title: updatedTitle !== '' ? updatedTitle : document_params.Title,  
+          University: updatedUniversity !== '' ? updatedUniversity : document_params.University,
+          Note_URL: new_url
+        }
+        await updateDoc(note_doc, updated_data)
+      } else {
+        const updated_data = {
+          Access: updatedAccess !== '' ? updatedAccess : document_params.Access,
+          Course: updatedCourse !== '' ? updatedCourse : document_params.Course,
+          Title: updatedTitle !== '' ? updatedTitle : document_params.Title,  
+          University: updatedUniversity !== '' ? updatedUniversity : document_params.University,
+        }
+        await updateDoc(note_doc, updated_data)
+      }
+    }
+  }
+
+  const deleteNote = async() => {
+    alert("Note Deleted")
+    if (USER_NOTES.current !== null && selected !== null) {
+      const document = USER_NOTES.current.filter((val: { params: { [x: string]: any }, id: string }) => val.params.Note_URL === selected.Note_ID)
+      const document_id = document[0].id
+      const note_doc = doc(db, "notes", document_id)
+      await deleteDoc(note_doc)
+    }
+  }
+
   useEffect(() => {
     const getNotes = async () => {
       const data = await getDocs(notesCollectionRef)
-      const ALL_NOTES = data.docs.map((doc) => ({ ...doc.data() }))
-      const USER_NOTES = ALL_NOTES.filter((note) => note.Creator == currentUserData.Username)
+      const ALL_NOTES = data.docs.map((doc) => ({ params: { ...doc.data() }, id: doc.id }))
+      USER_NOTES.current = ALL_NOTES.filter((note) => note.params.Creator == currentUserData.Username)
       const UserNotesTemp:FeedProps[] = [] 
 
-      USER_NOTES?.map((val) => {
+      USER_NOTES.current?.map((val) => {
         const data = {
-          Note_ID: val?.Note_URL,
-          Profile: val?.Profile_URL,
-          Created: val?.Creator,
-          Title: val?.Title,
-          Course: val?.Course,
-          University: val?.University,
-          Views: val?.Views,
-          Likes: val?.Likes,
-          Dislikes: val?.Dislikes,
-          Date: val?.Date,
-          Comment: val?.Comments,
-          Access: val?.Access,
+          Note_ID: val?.params.Note_URL,
+          Profile: val?.params.Profile_URL,
+          Created: val?.params.Creator,
+          Title: val?.params.Title,
+          Course: val?.params.Course,
+          University: val?.params.University,
+          Views: val?.params.Views,
+          Likes: val?.params.Likes,
+          Dislikes: val?.params.Dislikes,
+          Date: val?.params.Date,
+          Comment: val?.params.Comments,
+          Access: val?.params.Access,
         }
         UserNotesTemp.push(data)
       })
@@ -85,34 +133,41 @@ export const USER_NOTES:React.FC = () => {
             <div className='Note_Properties'>
               <div className='Note_Property_Header_1'>
                 <p>Update Note</p>
-                <form className='Note_Property_Form'>
+                <div className='Note_Property_Form'>
                   <div className='Note_Property_Block'>
                     <p></p>
-                    <input placeholder='Updated Title'></input>
+                    <input placeholder='Updated Title'onChange={(e) => { setUpdatedTitle(e.target.value) }} />
                   </div>
                   <div className='Note_Property_Block'>
                     <p></p>
-                    <input placeholder='Updated Course'></input>
+                    <input placeholder='Updated Course'onChange={(e) => { setUpdatedCourse(e.target.value) }} />
                   </div>
                   <div className='Note_Property_Block'>
                     <p></p>
-                    <input placeholder='Updated University'></input>
+                    <input placeholder='Updated University' onChange={(e) => { setUpdatedUniversity(e.target.value) }} />
                   </div>
                   <div className='Note_Property_Block'>
                     <p></p>
-                    <input placeholder='Updated File' type='file'></input>
+                    <input placeholder='Updated File' type='file' onChange={(e) => { 
+                      let allFiles = e.target.files
+                      if (allFiles !== null) {
+                        setUpdatedFiles(allFiles[0])
+                      }
+                    }}/>
                   </div>
                   <div className='Note_Property_Block'>
                     <p></p>
-                    <select>
-                      <option>Updated Access</option>
-                      <option>Public</option>
-                      <option>Private</option>
+                    <select value={updatedAccess} onChange={(e) => { 
+                      setUpdatedAccess(e.target.value) 
+                    }}>
+                      <option value="">Updated Access</option>
+                      <option value="Public">Public</option>
+                      <option value="Private">Private</option>
                     </select>
                   </div>
-                  <button className='Update_Note'>Update Note</button>
-                  <button className='Delete_Note'>Delete Note</button>
-                </form>
+                  <button className='Update_Note' onClick={ updateNote }>Update Note</button>
+                  <button className='Delete_Note' onClick={ deleteNote }>Delete Note</button>
+                </div>
               </div>
             </div> : <></>
           }
