@@ -3,9 +3,8 @@ import { UserContext, UserContextType } from '../../../../App'
 import { FeedProps } from '../Feed/Feed_Interface'
 import { db } from '../../../Firebase/Firebase'
 import { collection, doc,  getDocs, deleteDoc, updateDoc } from 'firebase/firestore'
-import { uploadPDFAndGetURL } from '../Add_Note/Create_Notes'
+import { uploadPDFAndGetURL, createFileName, cleanStorage } from '../../../Firebase/Firebase'
 import './user_notes.css'
-import { update } from '@firebase/database'
 
 export const USER_NOTES:React.FC = () => {
 
@@ -37,7 +36,8 @@ export const USER_NOTES:React.FC = () => {
       let new_url = ''
 
       if (updatedFiles !== null) {
-        await uploadPDFAndGetURL(updatedFiles).then((url) => { new_url = url })
+        const fileName = createFileName(updatedFiles)
+        await uploadPDFAndGetURL(updatedFiles, fileName).then((url) => { new_url = url })
         const updated_data = {
           Access: updatedAccess !== '' ? updatedAccess : document_params.Access,
           Course: updatedCourse !== '' ? updatedCourse : document_params.Course,
@@ -45,6 +45,7 @@ export const USER_NOTES:React.FC = () => {
           University: updatedUniversity !== '' ? updatedUniversity : document_params.University,
           Note_URL: new_url
         }
+        await cleanStorage(document_params.Note_FileName)
         await updateDoc(note_doc, updated_data)
       } else {
         const updated_data = {
@@ -62,8 +63,10 @@ export const USER_NOTES:React.FC = () => {
     alert("Note Deleted")
     if (USER_NOTES.current !== null && selected !== null) {
       const document = USER_NOTES.current.filter((val: { params: { [x: string]: any }, id: string }) => val.params.Note_URL === selected.Note_ID)
+      const document_params = document[0].params
       const document_id = document[0].id
       const note_doc = doc(db, "notes", document_id)
+      await cleanStorage(document_params.Note_FileName)
       await deleteDoc(note_doc)
     }
   }

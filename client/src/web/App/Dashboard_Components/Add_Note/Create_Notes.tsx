@@ -1,25 +1,12 @@
 import React from 'react'
 import { useState, useContext } from 'react'
 import { UserContext, UserContextType } from '../../../../App'
-import { storage } from '../../../Firebase/Firebase'
-import { ref, uploadBytes, getDownloadURL } from 'firebase/storage'
-import { v4 } from 'uuid'
 import { CommentProps } from '../Feed/Feed_Interface'
 import { addDoc, collection } from 'firebase/firestore'
 import { db } from '../../../Firebase/Firebase'
+import { uploadPDFAndGetURL, createFileName } from '../../../Firebase/Firebase'
 import './create_notes.css'
 
-
-export async function uploadPDFAndGetURL(file: File): Promise<string> {
-  const fileRef = ref(storage, `notes/${file.name + v4()}`)
-  try {
-    const snapshot = await uploadBytes(fileRef, file) // Upload the PDF to Firebase Cloud Storage
-    const downloadURL = await getDownloadURL(snapshot.ref) // Get the download URL of the uploaded PDF
-    return downloadURL as string
-  } catch (error) {
-    throw error;
-  }
-}
 
 export const CREATE_NOTES:React.FC = () => {
 
@@ -39,7 +26,8 @@ export const CREATE_NOTES:React.FC = () => {
     if (file == null) {
       return
     } else {
-      uploadPDFAndGetURL(file).then((url) => {
+      const fileName = createFileName(file)
+      uploadPDFAndGetURL(file, fileName).then((url) => {
         const now = new Date()
         const year = now.getFullYear()
         const month = String(now.getMonth() + 1).padStart(2, '0')
@@ -53,6 +41,7 @@ export const CREATE_NOTES:React.FC = () => {
         
         const data = {
           Note_URL: fileUrl,
+          Note_FileName: fileName,
           Profile_URL: '',
           Creator: creator,
           Title: title,

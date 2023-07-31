@@ -1,9 +1,10 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
-import { getStorage } from "firebase/storage"
+import { getStorage, deleteObject, ref, uploadBytes, getDownloadURL  } from "firebase/storage"
 import { getDatabase } from 'firebase/database';
 import { getFirestore } from '@firebase/firestore'
+import { v4 } from 'uuid'
 
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -27,3 +28,27 @@ export const analytics = getAnalytics(app);
 export const storage = getStorage(app);
 export const database = getDatabase(app);
 export const db = getFirestore(app)
+
+export function createFileName(file: File) {
+    return `notes/${file.name + v4()}`
+}
+
+export async function uploadPDFAndGetURL(file: File, fileName: string): Promise<string> {
+    const fileRef = ref(storage, fileName)
+    try {
+      const snapshot = await uploadBytes(fileRef, file) // Upload the PDF to Firebase Cloud Storage
+      const downloadURL = await getDownloadURL(snapshot.ref) // Get the download URL of the uploaded PDF
+      return downloadURL as string
+    } catch (error) {
+      throw error;
+    }
+}
+
+export async function cleanStorage(fileName: string) {
+    const fileRef = ref(storage, fileName)
+    deleteObject(fileRef).then((res) => {
+        console.log("Deleted File")
+    }).catch((err) => {
+        console.log("Error Occured")
+    })
+}
