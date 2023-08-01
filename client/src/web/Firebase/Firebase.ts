@@ -32,6 +32,7 @@ export const db = getFirestore(app)
 
 // Collection References
 export const notesCollectionRef = collection(db, "notes")
+export const savedCollectionRef = collection(db, "saved")
 
 // Helper Functions
 export function createFileName(file: File) {
