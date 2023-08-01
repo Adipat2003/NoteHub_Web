@@ -204,7 +204,7 @@
 }
 
 .Dashboard_Main_Content {
-    position: fixed;
+    position: absolute;
     background-color: white;
     top: 70px;
     left: 245px;
