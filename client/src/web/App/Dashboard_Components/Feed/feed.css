@@ -423,3 +423,32 @@
     margin-left: 100%;
     transform: translate(-70px, -45px);
 }
+
+.Not_Saved {
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+    height: 40px;
+    width: 40px;
+    border-radius: 20px;
+    transition: 1s;
+}
+
+.Not_Saved svg {
+    color: black;
+}
+
+.Not_Saved:hover,
+.Saved {
+    border: none;
+    background-color: black;
+    height: 40px;
+    width: 40px;
+    border-radius: 20px;
+    cursor: pointer;
+}
+
+.Not_Saved:hover svg,
+.Saved svg {
+    color: white;
+}

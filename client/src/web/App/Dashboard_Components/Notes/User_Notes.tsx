@@ -1,8 +1,8 @@
 import React, { useEffect, useState, useContext, useRef } from 'react'
 import { UserContext, UserContextType } from '../../../../App'
 import { FeedProps } from '../Feed/Feed_Interface'
-import { db } from '../../../Firebase/Firebase'
-import { collection, doc,  getDocs, deleteDoc, updateDoc } from 'firebase/firestore'
+import { notesCollectionRef, db } from '../../../Firebase/Firebase'
+import { doc,  getDocs, deleteDoc, updateDoc } from 'firebase/firestore'
 import { uploadPDFAndGetURL, createFileName, cleanStorage } from '../../../Firebase/Firebase'
 import './user_notes.css'
 
@@ -18,8 +18,6 @@ export const USER_NOTES:React.FC = () => {
   const [updatedFiles, setUpdatedFiles] = useState<File | null>(null)
   const [updatedNoteID, setUpdatedNoteID] = useState('')
   const [updatedAccess, setUpdatedAccess] = useState('')
-
-  const notesCollectionRef = collection(db, "notes")
 
   const USER_NOTES = useRef<{ params: { [x: string]: any }, id: string }[] | null>(null)
 

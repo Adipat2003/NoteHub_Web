@@ -2,8 +2,8 @@ import React from 'react'
 import { useState, useContext } from 'react'
 import { UserContext, UserContextType } from '../../../../App'
 import { CommentProps } from '../Feed/Feed_Interface'
-import { addDoc, collection } from 'firebase/firestore'
-import { db } from '../../../Firebase/Firebase'
+import { addDoc } from 'firebase/firestore'
+import { notesCollectionRef } from '../../../Firebase/Firebase'
 import { uploadPDFAndGetURL, createFileName } from '../../../Firebase/Firebase'
 import './create_notes.css'
 
@@ -18,8 +18,6 @@ export const CREATE_NOTES:React.FC = () => {
   const [university, setUniversity] = useState('')
   const [filename, setFileName] = useState('')
   const [file, setFile] = useState<File | null>(null)
-
-  const notesCollectionRef = collection(db, "notes")
 
   const handleSubmit = () => {
     alert("Note Submitted")

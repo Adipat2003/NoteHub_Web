@@ -4,6 +4,7 @@ import { getAnalytics } from "firebase/analytics";
 import { getStorage, deleteObject, ref, uploadBytes, getDownloadURL  } from "firebase/storage"
 import { getDatabase } from 'firebase/database';
 import { getFirestore } from '@firebase/firestore'
+import { collection } from "firebase/firestore";
 import { v4 } from 'uuid'
 
 // TODO: Add SDKs for Firebase products that you want to use
@@ -29,6 +30,10 @@ export const storage = getStorage(app);
 export const database = getDatabase(app);
 export const db = getFirestore(app)
 
+// Collection References
+export const notesCollectionRef = collection(db, "notes")
+
+// Helper Functions
 export function createFileName(file: File) {
     return `notes/${file.name + v4()}`
 }
@@ -54,3 +59,4 @@ export async function cleanStorage(fileName: string) {
         console.log(err)
     })
 }
+

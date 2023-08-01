@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { MdArrowForwardIos, MdArrowBackIos } from 'react-icons/md'
-import { collection, getDocs } from 'firebase/firestore'
-import { db } from '../../../Firebase/Firebase'
+import { BsBookmarkDash } from 'react-icons/bs'
+import { getDocs } from 'firebase/firestore'
+import { notesCollectionRef } from '../../../Firebase/Firebase'
 import { FeedProps } from './Feed_Interface'
 import { Feed_Card } from './Feed_Card'
 import { Note } from './Note'
@@ -19,12 +20,11 @@ export const Feed:React.FC = () => {
     const [data, setData] = useState<FeedProps[]>([])
     const [filteredData, setFilteredData] = useState<FeedProps[][]>([[]])
     const [filteredData2, setFilteredData2] = useState<FeedProps[]>([])
+    const [saved, setSaved] = useState('Not_Saved')
 
     const [courseNumber, setCourseNumber] = useState('')
     const [university, setUniversity] = useState('')
     const [search, setSearch] = useState('')
-
-    const notesCollectionRef = collection(db, "notes")
 
     useEffect(() => {
 
@@ -181,6 +181,9 @@ export const Feed:React.FC = () => {
                         <input type='text' placeholder='Course Number' onChange={(e) => { setCourseNumber(e.target.value); setPage(0); }}/>
                         <input type='text' placeholder='University' onChange={(e) => { setUniversity(e.target.value); setPage(0); }}/>
                         <input type='text' placeholder='Search' onChange={(e) => { setSearch(e.target.value); setPage(0); }}/>
+                        <button className={saved} onClick={() => { saved === 'Saved' ? setSaved('Not_Saved') : setSaved('Saved') }}>
+                            <BsBookmarkDash style={{ transform: "translateY(2.5px)" }}/>
+                        </button>
                     </div>
                     <div className='Feed_Headers'>
                         <p>Profile</p>

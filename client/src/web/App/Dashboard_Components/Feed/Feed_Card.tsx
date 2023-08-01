@@ -15,6 +15,11 @@ export const Feed_Card:React.FC<FeedCardProps> = ({
     Date,
     displayCard
 }) => {
+
+    const addNoteToSaved = () => {
+        
+    }
+
     return (
         <div className='Feed_Card'>
             <div className='Feed_Card_Container'>
@@ -30,7 +35,7 @@ export const Feed_Card:React.FC<FeedCardProps> = ({
             <div className='Feed_Card_Container'><p>{Likes}</p></div>
             <div className='Feed_Card_Container'><p>{Dislikes}</p></div>
             <div className='Feed_Card_Container'><p>{Date}</p></div>
-            <div className='Feed_Card_Container'><button><BsBookmark/></button></div>
+            <div className='Feed_Card_Container'><button onClick={ addNoteToSaved }><BsBookmark/></button></div>
             <div className='Feed_Card_Container'><button onClick={() => { displayCard(Note_ID) }}><BsBoxArrowInRight/></button></div>
         </div>
     )

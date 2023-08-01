@@ -1,7 +1,7 @@
 import React from 'react'
 import './dashboard.css'
 import { PiFinnTheHumanLight, PiChatTeardropTextLight, PiHexagonLight } from 'react-icons/pi'
-import { BsArrowReturnRight, BsBookmarkDash } from 'react-icons/bs'
+import { BsArrowReturnRight } from 'react-icons/bs'
 import { CiBellOn } from 'react-icons/ci'
 import { BsPlusLg } from 'react-icons/bs'
 import { Feed } from './Dashboard_Components/Feed/Feed'
@@ -16,7 +16,6 @@ import { Settings } from './Dashboard_Components/Settings/Settings'
 import { Chats } from './Dashboard_Components/Chats/Chats'
 import { USER_NOTES } from './Dashboard_Components/Notes/User_Notes'
 import { Notification } from './Dashboard_Components/Notification/Notifications'
-import { Saved } from './Dashboard_Components/Save/Saved'
 
 export const Dashboard:React.FC = () => {
 
@@ -38,7 +37,6 @@ export const Dashboard:React.FC = () => {
       <div className='Dashboard_Main_Content'>
         { display === 'feed' ? <Feed/> : <></> }
         { display === 'notes' ? <USER_NOTES/> : <></> }
-        { display === 'saved' ? <Saved/> : <></> }
         { display === 'chat' ? <Chats/> : <></> }
         { display === 'notification' ? <Notification/> : <></> }
         { display === 'account' ? <Settings/> : <></> }
@@ -101,8 +99,7 @@ const DASHBOARD_SIDEBAR:React.FC<displayProps> = ({changeDisplay}) => {
       </div>
       <div className='Sidebar_Options'>
         <button onClick={() => {changeDisplay('feed')}}><PiFinnTheHumanLight className='Sidebar_Icon'/> Home</button>
-        <button onClick={() => {changeDisplay('notes')}}><LiaStickyNoteSolid className='Sidebar_Icon'/> Your Notes</button>
-        <button onClick={() => {changeDisplay('saved')}}><BsBookmarkDash className='Sidebar_Icon'/> Saved</button>
+        <button onClick={() => {changeDisplay('notes')}}><LiaStickyNoteSolid className='Sidebar_Icon'/> Edit Notes</button>
         <button onClick={() => {changeDisplay('chat')}}><PiChatTeardropTextLight className='Sidebar_Icon'/> Chat</button>
         <button onClick={() => {changeDisplay('notifications')}}><CiBellOn className='Sidebar_Icon'/> Notification</button>
         <button onClick={() => {changeDisplay('account')}}><PiHexagonLight className='Sidebar_Icon'/> Account</button>
