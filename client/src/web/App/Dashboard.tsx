@@ -1,5 +1,4 @@
 import React from 'react'
-import './dashboard.css'
 import { PiFinnTheHumanLight, PiChatTeardropTextLight, PiHexagonLight } from 'react-icons/pi'
 import { BsArrowReturnRight } from 'react-icons/bs'
 import { CiBellOn } from 'react-icons/ci'
@@ -16,6 +15,7 @@ import { Settings } from './Dashboard_Components/Settings/Settings'
 import { Chats } from './Dashboard_Components/Chats/Chats'
 import { USER_NOTES } from './Dashboard_Components/Notes/User_Notes'
 import { Notification } from './Dashboard_Components/Notification/Notifications'
+import './dashboard.css'
 
 export const Dashboard:React.FC = () => {
 
@@ -28,7 +28,7 @@ export const Dashboard:React.FC = () => {
       navigate('/login')
     }
   }, [currentUserData.Username, navigate])
-
+ 
   return(
     <div className='Dashboard'>
       <DASHBOARD_LOGO/>

@@ -4,6 +4,7 @@ import { FeedProps } from '../Feed/Feed_Interface'
 import { notesCollectionRef, db } from '../../../Firebase/Firebase'
 import { doc,  getDocs, deleteDoc, updateDoc } from 'firebase/firestore'
 import { uploadPDFAndGetURL, createFileName, cleanStorage } from '../../../Firebase/Firebase'
+import { MdArrowForwardIos, MdArrowBackIos } from 'react-icons/md'
 import './user_notes.css'
 
 export const USER_NOTES:React.FC = () => {
@@ -11,6 +12,7 @@ export const USER_NOTES:React.FC = () => {
   const { currentUserData } = useContext<UserContextType>(UserContext)
   const [data, setData] = useState<FeedProps[]>([])
   const [selected, setSelected] = useState<FeedProps | null>(null)
+  const [hideEditor, setHideEditor] = useState(false)
 
   const [updatedTitle, setUpdatedTitle] = useState('')
   const [updatedCourse, setUpdatedCourse] = useState('')
@@ -20,9 +22,6 @@ export const USER_NOTES:React.FC = () => {
   const [updatedAccess, setUpdatedAccess] = useState('')
 
   const USER_NOTES = useRef<{ params: { [x: string]: any }, id: string }[] | null>(null)
-
-
-  let count = -1;
 
   const updateNote = async () => {
     alert("Note Updated")
@@ -74,7 +73,7 @@ export const USER_NOTES:React.FC = () => {
     const getNotes = async () => {
       const data = await getDocs(notesCollectionRef)
       const ALL_NOTES = data.docs.map((doc) => ({ params: { ...doc.data() }, id: doc.id }))
-      USER_NOTES.current = ALL_NOTES.filter((note) => note.params.Creator == currentUserData.Username)
+      USER_NOTES.current = ALL_NOTES.filter((note) => note.params.Creator === currentUserData.Username)
       const UserNotesTemp:FeedProps[] = [] 
 
       USER_NOTES.current?.map((val) => {
@@ -103,20 +102,20 @@ export const USER_NOTES:React.FC = () => {
 
   return (
     <div className='Your_Notes'>
-        <div className='Note_Select'>
-          <div className={selected === null ? 'Note_View' : 'Note_View_Half'}>
-            <div className='Note_View_Header_1'>
-              <p>Select Note</p>
-            </div>
-            <div className='Note_View_Header_2'>
-              <p>Title</p>
-              <p>Course</p>
-              <p>University</p>
-              <p>Access</p>
-            </div>
+      <div className='Note_Select'>
+        <div className='Note_View'>
+          <div className='Note_View_Header_1'>
+            <p>Select Note</p>
+          </div>
+          <div className='Note_View_Header_2'>
+            <p>Title</p>
+            <p>Course</p>
+            <p>University</p>
+            <p>Access</p>
+          </div>
+          <div className="Your_Notes_Bar">
             {
               data.map((note) => {
-                count++;
                 return (
                   <button className={ note === selected ? 'Note_Selected' : 'Note_Unselected'} onClick={() => { 
                     note === selected ? setSelected(null) : setSelected(note) 
@@ -130,9 +129,70 @@ export const USER_NOTES:React.FC = () => {
               })
             }
           </div>
-          {
-            selected !== null ? 
-            <div className='Note_Properties'>
+        </div>
+      </div>
+      {
+        selected !== null ? 
+        <>
+          <div className={'Note_Properties_' + hideEditor.toString() }>
+            <div className='Note_Property_Header_1'>
+              <p>Update Note</p>
+              <div className='Note_Property_Form'>
+                <div className='Note_Property_Block'>
+                  <p></p>
+                  <input placeholder='Updated Title'onChange={(e) => { setUpdatedTitle(e.target.value) }} />
+                </div>
+                <div className='Note_Property_Block'>
+                  <p></p>
+                  <input placeholder='Updated Course'onChange={(e) => { setUpdatedCourse(e.target.value) }} />
+                </div>
+                <div className='Note_Property_Block'>
+                  <p></p>
+                  <input placeholder='Updated University' onChange={(e) => { setUpdatedUniversity(e.target.value) }} />
+                </div>
+                <div className='Note_Property_Block'>
+                  <p></p>
+                  <input placeholder='Updated File' type='file' onChange={(e) => { 
+                    let allFiles = e.target.files
+                    if (allFiles !== null) {
+                      setUpdatedFiles(allFiles[0])
+                    }
+                  }}/>
+                </div>
+                <div className='Note_Property_Block'>
+                  <p></p>
+                  <select value={updatedAccess} onChange={(e) => { 
+                    setUpdatedAccess(e.target.value) 
+                  }}>
+                    <option value="">Updated Access</option>
+                    <option value="Public">Public</option>
+                    <option value="Private">Private</option>
+                  </select>
+                </div>
+                <button className='Update_Note' onClick={ updateNote }>Update Note</button>
+                <button className='Delete_Note' onClick={ deleteNote }>Delete Note</button>
+                <button className={'Change_Editor_Status_' + hideEditor.toString()} onClick={ () => { setHideEditor(!hideEditor) }}>
+                  {
+                    hideEditor ?
+                    <MdArrowBackIos style={{ transform: "translate(3.25px, 2.5px)" }}/> 
+                      :
+                    <MdArrowForwardIos style={{ transform: "translateY(2.5px)" }}/>
+                  }
+                </button>
+              </div>
+            </div>
+          </div>
+        </> : <></>
+      }
+      <div className='Note_Preview'>
+        <embed className="Note_Preview_Viewer" src={selected !== null ? selected.Note_ID : ""} />
+      </div>
+    </div>
+  )
+}
+
+/*
+<div className={'Note_Properties_' + hideEditor.toString() }>
               <div className='Note_Property_Header_1'>
                 <p>Update Note</p>
                 <div className='Note_Property_Form'>
@@ -169,14 +229,15 @@ export const USER_NOTES:React.FC = () => {
                   </div>
                   <button className='Update_Note' onClick={ updateNote }>Update Note</button>
                   <button className='Delete_Note' onClick={ deleteNote }>Delete Note</button>
+                  <button className={'Change_Editor_Status_' + hideEditor.toString()} onClick={ () => { setHideEditor(!hideEditor) }}>
+                    {
+                      hideEditor ?
+                      <MdArrowBackIos style={{ transform: "translate(3.25px, 2.5px)" }}/> 
+                        :
+                      <MdArrowForwardIos style={{ transform: "translateY(2.5px)" }}/>
+                    }
+                  </button>
                 </div>
               </div>
-            </div> : <></>
-          }
-        </div>
-        <div className='Note_Preview'>
-          <embed className="Note_Preview_Viewer" src={selected !== null ? selected.Note_ID : ""} />
-        </div>
-    </div>
-  )
-}
+            </div>
+*/
