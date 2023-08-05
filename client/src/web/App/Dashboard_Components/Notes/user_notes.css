@@ -8,11 +8,12 @@
 
 .Note_Select {
     position: absolute;
-    width: calc((100vw - 272.5px) * 0.5);
+    width: calc((100vw - 245px) * 0.5);
     height: calc(100vh - 70px);
     top: 0;
     left: 0;
     border-right: 0.1px solid black;
+    overflow-y: overlay;
 }
 
 .Your_Notes_Bar {
@@ -32,7 +33,6 @@
 .Note_View {
     width: 100%;
     border-top: 0.1px solid black;
-    border-right: 0.1px solid black;
     border-bottom: 0.1px solid black;
 }
 
@@ -113,8 +113,15 @@
     font-family: 'Rubik', sans-serif;
     font-size: 12px;
     font-weight: 400;
-    width: 25%;
     text-align: center;
+}
+
+.Note_Unselected p {
+    width: 25%;
+}
+
+.Note_View_Header_2 p {
+    width: calc((100% - 15px) * 0.25);
 }
 
 .Note_Preview_Viewer {
@@ -124,19 +131,22 @@
 
 .Note_View_Header_1,
 .Note_View_Header_2 {
-    width: calc((100vw - 272.5px) * 0.5);
+    width: calc((100vw - 245px) * 0.5);
     height: 30px;
     border-bottom: 0.1px solid black;
     display: flex;
-    justify-content: space-around;
     align-items: center;
     position: fixed;
     background-color: white;
 }
 
+.Note_View_Header_1 {
+    justify-content: space-around;
+}
 
 .Note_View_Header_2  {
     top: 101.5px;
+    justify-content: left;
 }
 
 .Note_View_Header_1 p {
