@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext, useRef } from 'react'
-import { UserContext, UserContextType } from '../../../../App'
+import { UserContext, UserContextType } from '../../../Context/AuthenticationContext'
 import { FeedProps } from '../Feed/Feed_Interface'
 import { notesCollectionRef, db } from '../../../Firebase/Firebase'
 import { doc,  getDocs, deleteDoc, updateDoc } from 'firebase/firestore'

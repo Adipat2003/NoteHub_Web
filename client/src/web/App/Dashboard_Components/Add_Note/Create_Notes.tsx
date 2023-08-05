@@ -1,6 +1,6 @@
 import React from 'react'
 import { useState, useContext } from 'react'
-import { UserContext, UserContextType } from '../../../../App'
+import { UserContext, UserContextType } from '../../../Context/AuthenticationContext'
 import { CommentProps } from '../Feed/Feed_Interface'
 import { addDoc } from 'firebase/firestore'
 import { notesCollectionRef } from '../../../Firebase/Firebase'
