@@ -1,10 +1,10 @@
 // Import the functions you need from the SDKs you need
-import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
+import { initializeApp } from "firebase/app"
+import { getAnalytics } from "firebase/analytics"
 import { getStorage, deleteObject, ref, uploadBytes, getDownloadURL  } from "firebase/storage"
-import { getDatabase } from 'firebase/database';
+import { getDatabase } from 'firebase/database'
 import { getFirestore } from '@firebase/firestore'
-import { collection } from "firebase/firestore";
+import { collection } from "firebase/firestore"
 import { v4 } from 'uuid'
 
 // TODO: Add SDKs for Firebase products that you want to use
